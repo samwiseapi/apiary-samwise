@@ -11,7 +11,7 @@ the guidelines about how to design good API. Please maintain good and coherent w
 
 This section describes sample-related operations.    
 
-## Project Samples  [/projects/{projectId}/samples/{?sampleId}]  
+## Project Sample Retrieval [/projects/{projectId}/samples/{?sampleId}]  
 
 + Parameters
 
@@ -22,7 +22,7 @@ This section describes sample-related operations.
 
 ### Get samples [GET]
 
-All samples of given project are returned when no sampleId is specified.
+Returns specified sampleId if it belongs to given project. If no sampleId is specified, return all samples of given project.
 
  
 + Response 200 (application/json)
@@ -31,6 +31,17 @@ All samples of given project are returned when no sampleId is specified.
 + Response 404 (application/json)
     Sample in request does not exist in current project, or if no SampleId is specified -  project does not have samples.
  
+
+### Create arbitrary set of samples inside given project [POST]
+
+This method facilitates the scenario, when a random set of samples is created, each sample can belong to arbitrary subject or created without subject attached. 
+The entities must belong to one project.
+
+
+### Create set of samples for many subjects inside given project [POST]
+
+This method facilitates the scenario, when a fixed set of samples is created for number of subjects, so every subject receives same set of samples. Subjects are created 
+if not found. If no subject is given, samples set is created without attachment to any subject. The entities must belong to one project.
 
 
 # Data Structures
