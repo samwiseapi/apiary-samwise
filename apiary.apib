@@ -22,34 +22,35 @@ This section describes sample-related operations.
 
 ### Get samples [GET]
 
-All samples of given project are returned when no sampleId is specified
+All samples of given project are returned when no sampleId is specified.
 
-+ Attributes (Webhook Base)
-
-+ Request (application/json)
-    + Attributes (Webhook Base)
-
+ 
 + Response 200 (application/json)
-    + Attributes (Webhook Response)
+    + Attributes (SampleDTO)
+    
++ Response 404 (application/json)
+    Sample in request does not exist in current project, or if no SampleId is specified -  project does not have samples.
  
 
 
 # Data Structures
 
-## Webhook Base (object)
-+ url: https://example.com/webhook (string, required) - The address where webhooks requests should be submitted.
-+ active: true (boolean, required) - This field can be used to inspect or edit state of the webhook.
-+ types (array[Webhook Type], required) - Collection of Webhook types which should trigger Webhook event.
 
-## Webhook Response Base (Webhook Base)
-+ id: dc85058a-a683-11e4-ef46-e8b98f1a7ae4 (string, required) - Webhook `id`.
+## SamplePropertiesDTO (object)
++ ExternalSampleId: 12A4  (string, optional) - External Sample Id, such as parallel barcode from different system
++ ExternalSubjectId: 21az (string,optional) - External Subject Id, such as parallel identifier from different system
++ NumberOfVisits: 1 (number, optional) - Number Of Visits (?)
++ TimePointUnitId (number, 1) -  Identifier of unit used in Time Point  
++ SampleAmountUnitId (number, 1) - Sample Amount Unit Id, int (This relates to a table that contains all the sample units (volume,mass,concentration...))
++ SampleAmount (number, 0.001) - Sample amount
++ Aliquote (optional, string, 'A123') - aliquote string
++ SampleTypeId (required, number) - Sample Type identifier
 
-## Webhook Response (object)
-+ data (Webhook Response Base, required)
 
-## Webhook Type (object)
-+ name: sales (string, required) - One of: products, sales, customers, taxes
-+ version: 2.0 (string, required) - Version of the payload to be delivered. Currently the only supported value is "2.0".
+## SampleDTO (object)
++ SampleId (number,123456789, required)  - Sample ID
++ SampleProperties(SamplePropertiesDTO)
++ ClientSampleId (number, 1, optional) - Identifier of Sample ID received from client in request
++ Events (array[SamplePropertiesDTO], required) - Collection of sample events 
 
-## Webhook Collection (object)
-+ data (array[Webhook Response Base], required) - An array of Webhook objects. 
+ 
