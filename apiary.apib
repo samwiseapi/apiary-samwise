@@ -11,12 +11,18 @@ the guidelines about how to design good API. Please maintain good and coherent w
 
 This section describes sample-related operations.    
 
-## Project [/projects]
+## Project Samples  [/projects/{projectId}/samples/{?sampleId}]  
 
-### Get all samples for the given project [GET]
++ Parameters
+
+    + projectId (int, `1`) ... Project ID
+    + sampleId (optional, int, `124357891`) ... Sample ID to return full information
+ 
+
+
+### Get samples [GET]
+
+All samples of given project are returned when no sampleId is specified
 
 + Response 200 (application/json)
-
-        {
-            "questions_url": "/questions"
-        }
+ 
