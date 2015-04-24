@@ -1,53 +1,22 @@
 FORMAT: 1A
 HOST: http://polls.apiblueprint.org/
 
-# Samwise Web API EDITED
+#  Samwise Web API
 
 This document describes Samwise system WebAPI. Developers should refer to [this reference](https://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf)  for
 the guidelines about how to design good API. Please maintain good and coherent writing style.
 
-# Sample operations
 
-This section describes sample-related operations.  
- 
+# Group Sample API  
 
-## Get all samples for the given project
+This section describes sample-related operations.    
+
+## Project [/projects]
+
+### Get all samples for the given project [GET]
 
 + Response 200 (application/json)
 
         {
             "questions_url": "/questions"
         }
-
-## Get complete information about list of samples
-
-This method allows to query sample information based on Sample Id. Samples do not have to belong to same project.
-
-
-## Create arbitrary set of samples inside given project
-
-This method facilitates the scenario, when a random set of samples is created, each sample can belong to arbitrary subject or created without subject attached. 
-The entities must belong to one project.
-
-
-## Create set of samples for many subjects inside given project
-
-This method facilitates the scenario, when a fixed set of samples is created for number of subjects, so every subject receives same set of samples. Subjects are created 
-if not found. If no subject is given, samples set is created without attachment to any subject. The entities must belong to one project.
-
-## Receive samples for the  given project
-
-This method facilitates the sample reception scenario. 
-
-## Check if sample can be placed in given container
-
-This method checks if a given sample can be placed in given container. If sample can not be placed, method returns exact cause of rejection.
-
-## Upload list of Sample Barcodes using Excel file
-
-This method facilitates upload of an Excel file containing list of Sample Barcodes for further processing.
-
-## Validate Sample Information form
-
-This method should be called to validate user's unput in the Sample Information UI form. If data contains issues, method returns exact cause of rejection.
-
