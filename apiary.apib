@@ -24,5 +24,32 @@ This section describes sample-related operations.
 
 All samples of given project are returned when no sampleId is specified
 
++ Attributes (Webhook Base)
+
++ Request (application/json)
+    + Attributes (Webhook Base)
+
 + Response 200 (application/json)
+    + Attributes (Webhook Response)
  
+
+
+# Data Structures
+
+## Webhook Base (object)
++ url: https://example.com/webhook (string, required) - The address where webhooks requests should be submitted.
++ active: true (boolean, required) - This field can be used to inspect or edit state of the webhook.
++ types (array[Webhook Type], required) - Collection of Webhook types which should trigger Webhook event.
+
+## Webhook Response Base (Webhook Base)
++ id: dc85058a-a683-11e4-ef46-e8b98f1a7ae4 (string, required) - Webhook `id`.
+
+## Webhook Response (object)
++ data (Webhook Response Base, required)
+
+## Webhook Type (object)
++ name: sales (string, required) - One of: products, sales, customers, taxes
++ version: 2.0 (string, required) - Version of the payload to be delivered. Currently the only supported value is "2.0".
+
+## Webhook Collection (object)
++ data (array[Webhook Response Base], required) - An array of Webhook objects. 
