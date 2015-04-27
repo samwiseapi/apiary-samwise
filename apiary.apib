@@ -17,7 +17,8 @@ This section describes operations to retrieve sample types, events, statuses and
 Fetches all currently stored sample types items 
 
 + Response 200 (application/json)
-    + Attributes (array[SampleTypesDTO])
+    + Attributes
+        + SampleTypes: (array[SampleTypesDTO], required)
     
 + Response 404 (application/json)
 
@@ -31,9 +32,9 @@ Fetches all currently stored sample events, statuses and flags. Grouped in one r
 
 + Response 200 (application/json)
     + Attributes (object)
-        + SampleEvents: array[SampleEventDTO]
-        + SampleStatus: array[SampleStatusDTO]
-        + SampleFlag: array[SampleFlagDTO]
+        + SampleEvents: array[SampleEventDTO] (array[SampleEventDTO], required)
+        + SampleStatus: array[SampleStatusDTO] ( required)
+        + SampleFlag: array[SampleFlagDTO] ( required)
     
 + Response 404 (application/json)
 
@@ -106,17 +107,17 @@ if not found. If no subject is given, samples set is created without attachment 
 + ExternalSampleId: 12A4  (string, optional) - External Sample Id, such as parallel barcode from different system
 + ExternalSubjectId: 21az (string,optional) - External Subject Id, such as parallel identifier from different system
 + NumberOfVisits: 1 (number, optional) - Number Of Visits (?)
-+ TimePointUnitId (number, 1) -  Identifier of unit used in Time Point  
-+ SampleAmountUnitId (number, 1) - Sample Amount Unit Id, int (This relates to a table that contains all the sample units (volume,mass,concentration...))
-+ SampleAmount (number, 0.001) - Sample amount
-+ Aliquote (optional, string, 'A123') - aliquote string
++ TimePointUnitId: 1 (number) -  Identifier of unit used in Time Point  
++ SampleAmountUnitId: 1 (number) - Sample Amount Unit Id, int (This relates to a table that contains all the sample units (volume,mass,concentration...))
++ SampleAmount: 0.001 (number) - Sample amount
++ Aliquote: 'A123' (optional, string) - aliquote string
 + SampleTypeId (required, number) - Sample Type identifier
 
 
 ## SampleDTO (object)
-+ SampleId (number,123456789, required)  - Sample ID
-+ SampleProperties(SamplePropertiesDTO)
-+ ClientSampleId (number, 1, optional) - Identifier of Sample ID received from client in request
++ SampleId: 123456789 (number,  required)  - Sample ID
++ SampleProperties: SamplePropertiesDTO
++ ClientSampleId: 1 (number, optional) - Identifier of Sample ID received from client in request
 + Events (array[SamplePropertiesDTO], required) - Collection of sample events 
 
  
