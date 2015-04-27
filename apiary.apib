@@ -8,7 +8,36 @@ the guidelines about how to design good API. Please maintain good and coherent w
 
 # Group Sample Types, Events, Flags, Statuses API
 
-This section describes operations to retrieve sample types, events, statuses and flags. These operations are provide client with information about sample related enumerations.
+This section describes operations to retrieve sample types, events, statuses and flags. These operations provide client with information about sample related enumerations.
+
+## Sample Types [/sampletypes]
+
+### Get All Sample Types [GET]
+
+Fetches all currently stored sample types items 
+
++ Response 200 (application/json)
+    + Attributes (array[SampleTypesDTO])
+    
++ Response 404 (application/json)
+
+        Sample types not found.
+ 
+## Sample Event, Status, Flag List [/sampleproperties]
+
+### Get Sample Event , Status, Flags List [GET]
+
+Fetches all currently stored sample events, statuses and flags. Grouped in one request as they will be loaded on UI load.
+
++ Response 200 (application/json)
+    + Attributes (object)
+        + SampleEvents: array[SampleEventDTO]
+        + SampleStatus: array[SampleStatusDTO]
+        + SampleFlag: array[SampleFlagDTO]
+    
++ Response 404 (application/json)
+
+        Sample types not found.
 
 
 # Group Sample API  
@@ -33,7 +62,8 @@ Returns specified sampleId if it belongs to given project. If no sampleId is spe
     + Attributes (SampleDTO)
     
 + Response 404 (application/json)
-    Sample in request does not exist in current project, or if no SampleId is specified -  project does not have samples.
+        
+        Sample in request does not exist in current project, or if no SampleId is specified -  project does not have samples.
  
 
 ### Create arbitrary set of samples inside given project [POST]
@@ -49,6 +79,27 @@ if not found. If no subject is given, samples set is created without attachment 
 
 
 # Data Structures
+
+## SampleTypesDTO (object)
++ Id: 12345678 (number) - Unique key
++ Label: myLabel (string) - Free text for End User
++ LocalizationNameKey: myName (string) - Localized name key for the sample types
++ Localization Description Key: myDescription (string) - Localized description key for the sample types 
+
+## SampleEventDTO (object)
++ Id: 12345678 (number) - Unique key
++ Label: myLabel (string) - Free text for End User
++ LocalizationNameKey: myName (string) - Localized name key for the sample event
+
+## SampleStatusDTO (object)
++ Id: 12345678 (number) - Unique key
++ Label: myLabel (string) - Free text for End User
++ LocalizationNameKey: myName (string) - Localized name key for the sample status
+
+## SampleFlagDTO (object)
++ Id: 12345678 (number) - Unique key
++ Label: myLabel (string) - Free text for End User
++ LocalizationNameKey: myName (string) - Localized name key for the sample flag
 
 
 ## SamplePropertiesDTO (object)
