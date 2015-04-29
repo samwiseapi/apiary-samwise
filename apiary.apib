@@ -6,7 +6,85 @@ HOST: http://polls.apiblueprint.org/
 This document describes Samwise system WebAPI. Developers should refer to [this reference](https://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf)  for
 the guidelines about how to design good API. Please maintain good and coherent writing style.
 
+Dto naming convention
+For common Type, Event, Unit... definition name Dtos using syntax MyInitailizationDefinitionDto 
+Sample related Dtos start with Sample, example SampleSomeDto
 <!-- This is a comment -->
+
+# Data Structures
+## SampleTypeDefinitionDto (object)
+Definition of SampleType , since this is definition of SampleType use name SampleTypeDefinitionDto 
++ Id: 12345678 (number) - Unique key
++ Label: myLabel (string) - Free text for End User
++ LocalizationNameKey: myName (string) - Localized name key for the sample types
++ Localization Description Key: myDescription (string) - Localized description key for the sample types 
+
+## SampleEventDefinitionDto (object)
+Definition of Sample Event
++ Id: 12345678 (number) - Unique key
++ Label: myLabel (string) - Free text for End User
++ LocalizationNameKey: myName (string) - Localized name key for the sample event
+
+## SampleStatusDefinitionDto (object)
+Definition of Sample Status
++ Id: 12345678 (number) - Unique key
++ Label: myLabel (string) - Free text for End User
++ LocalizationNameKey: myName (string) - Localized name key for the sample status
+
+## SampleFlagDefinitionDto (object)
+Definition of Sample Flag
++ Id: 12345678 (number) - Unique key
++ Label: myLabel (string) - Free text for End User
++ LocalizationNameKey: myName (string) - Localized name key for the sample flag
+
+
+## SamplePropertiesDto (object)
+Definition of Sample Properties
++ ExternalSampleId: 12A4  (string, optional) - External Sample Id, such as parallel barcode from different system
++ ExternalSubjectId: 21az (string,optional) - External Subject Id, such as parallel identifier from different system
++ NumberOfVisits: 1 (number, optional) - Number Of Visits (?)
++ TimePointUnitId: 1 (number) -  Identifier of unit used in Time Point  
++ SampleAmountUnitId: 1 (number) - Sample Amount Unit Id, int (This relates to a table that contains all the sample units (volume,mass,concentration...))
++ SampleAmount: 0.001 (number) - Sample amount
++ Aliquote: 'A123' (optional, string) - aliquote string
++ SampleTypeId (required, number) - Sample Type identifier
+
+
+## SampleDto (object)
+Definition of sample
++ SampleId: 123456789 (number,  required)  - Sample ID
++ SampleProperties: SamplePropertiesDto (SamplePropertiesDto, optional) - SamplePropertiesDto
++ ClientSampleId: 1 (number, optional) - Identifier of Sample ID received from client in request
++ Events: array[SampleEventDto] (array[SampleEventDto], optional) - Array of SampleEventDto 
+
+## SampleEventDto (array)
+Decribes sample event,
++ EventId: 5 (number, required) - Event ID
++ Timestamp:  "2050-02-18T21:00:42Z" (datetime, required) - Timestamp
+
+## SampleStatusResponseDto
+
+
+## SampleSaveResponseDto
+In 29.4 api SaveResponseDto 
++ Samples: array[SampleDTO] (array[SampleDto], required) - Array of SampleDto, sample properties required in SampleDto 
++ Subjects: array[
+
+## SubjectIdDto
+Dto for subject id
++ SubjectIdSuffix: 1234567890 (long, required) - SubjectIdSuffix
++ SubjectIdPrefix: "MyPrefix" (string, optional) - SubjectIdPrefix
+
+## SubjectStatusDto
+Dto for subject status
++ SubjectId: SubjectIdDto (SubjectIdDto, required) - SubjectId
++ SubjectStatus: 1 (SubjectStatusEnumeration, required) - SubjectStatus as enumeration 
+
+## ProjectSubjectIdDto
+Describes Project Subject
++ projectId: 23 (number, required) - Project ID 
++ prefix: "HUMAN"
++ subjectId: 12
 
 # Group Sample Types, Events, Flags, Statuses API
 
@@ -20,7 +98,7 @@ Fetches all currently stored sample types items
 
 + Response 200 (application/json)
     + Attributes
-        + SampleTypes: array[SampleTypeDto] (array[SampleTypeDto], required) - Array of SampleTypeDto 
+        + SampleTypes: array[SampleTypeDefinitionDto] (array[SampleTypeDefinitionDto], required) - Array of SampleTypeDefinitionDto 
     
 + Response 404 (application/json)
 
@@ -34,9 +112,9 @@ Fetches all currently stored sample events, statuses and flags. Grouped in one r
 
 + Response 200 (application/json)
     + Attributes (object)
-        + SampleEvents: array[SampleEventDto] (array[SampleEventDto], required) - Array of SampleEventDto
-        + SampleStatus: array[SampleStatusDto] (array[SampleStatusDto], required) - Array of SampleStatusDto
-        + SampleFlags: array[SampleFlagDto] ( array[SampleFlagDto], required) - Array of SampleFlagDto
+        + SampleEvents: array[SampleEventDefinitionDto] (array[SampleEventDefinitionDto], required) - Array of SampleEventDefinitionDto
+        + SampleStatus: array[SampleStatusDefinitionDto] (array[SampleStatusDefinitionDto], required) - Array of SampleStatusDefinitionDto
+        + SampleFlags: array[SampleFlagDefinitionDto] ( array[SampleFlagDefinitionDto], required) - Array of SampleFlagDefinitionDto
     
 + Response 404 (application/json)
 
@@ -47,7 +125,7 @@ Fetches all currently stored sample events, statuses and flags. Grouped in one r
 
 This section describes sample-related operations.    
 
-## Project Sample Retrieval [/projects/{projectId}/samples/{?sampleId}]  
+## Project Sample Retrieval [/{projectId}/samples/{?sampleId}]  
 
 + Parameters
 
@@ -81,68 +159,5 @@ This method facilitates the scenario, when a fixed set of samples is created for
 if not found. If no subject is given, samples set is created without attachment to any subject. The entities must belong to one project.
 
 
-# Data Structures
-## SampleTypeDto (object)
-Definition of SampleType 
-+ Id: 12345678 (number) - Unique key
-+ Label: myLabel (string) - Free text for End User
-+ LocalizationNameKey: myName (string) - Localized name key for the sample types
-+ Localization Description Key: myDescription (string) - Localized description key for the sample types 
-
-## SampleEventDto (object)
-Definition of Sample Event
-+ Id: 12345678 (number) - Unique key
-+ Label: myLabel (string) - Free text for End User
-+ LocalizationNameKey: myName (string) - Localized name key for the sample event
-
-## SampleStatusDto (object)
-Definition of Sample Status
-+ Id: 12345678 (number) - Unique key
-+ Label: myLabel (string) - Free text for End User
-+ LocalizationNameKey: myName (string) - Localized name key for the sample status
-
-## SampleFlagDto (object)
-Definition of Sample Flag
-+ Id: 12345678 (number) - Unique key
-+ Label: myLabel (string) - Free text for End User
-+ LocalizationNameKey: myName (string) - Localized name key for the sample flag
-
-## SamplePropertiesDto (object)
-Definition of Sample Properties
-+ ExternalSampleId: 12A4  (string, optional) - External Sample Id, such as parallel barcode from different system
-+ ExternalSubjectId: 21az (string,optional) - External Subject Id, such as parallel identifier from different system
-+ NumberOfVisits: 1 (number, optional) - Number Of Visits (?)
-+ TimePointUnitId: 1 (number) -  Identifier of unit used in Time Point  
-+ SampleAmountUnitId: 1 (number) - Sample Amount Unit Id, int (This relates to a table that contains all the sample units (volume,mass,concentration...))
-+ SampleAmount: 0.001 (number) - Sample amount
-+ Aliquote: 'A123' (optional, string) - aliquote string
-+ SampleTypeId (required, number) - Sample Type identifier
-
-
-## SampleDto (object)
-Definition of sample
-+ SampleId: 123456789 (number,  required)  - Sample ID
-+ SampleProperties: SamplePropertiesDto (SamplePropertiesDto, optional) - SamplePropertiesDto
-+ ClientSampleId: 1 (number, optional) - Identifier of Sample ID received from client in request
-+ Events: SampleEventsDto (SampleEventsDto, optional) - Collection of sample events 
-
-## SampleEventsDto (array)
-Decribes sample event , TODO Rename
-+ EventId: 5 (number, required) - Event ID
-+ Timestamp:  "2050-02-18T21:00:42Z" (datetime, required) - Timestamp
-
-## SampleStatusResponseDto
-
-
-## SaveSampleResponseDto
-In 29.4 api SaveResponseDto 
-+ Samples: array[SampleDTO] (array[SampleDto], required) - Array of SampleDto, sample properties required in SampleDto 
-+ Subjects: array[
-
-
-## ProjectSubjectIdDto
-Describes Project Subject
-+ projectId: 23 (number, required) - Project 
-+ prefix: "HUMAN"
 
  
