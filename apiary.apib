@@ -6,6 +6,8 @@ HOST: http://polls.apiblueprint.org/
 This document describes Samwise system WebAPI. Developers should refer to [this reference](https://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf)  for
 the guidelines about how to design good API. Please maintain good and coherent writing style.
 
+<!-- This is a comment -->
+
 # Group Sample Types, Events, Flags, Statuses API
 
 This section describes operations to retrieve sample types, events, statuses and flags. These operations provide client with information about sample related enumerations.
@@ -18,7 +20,7 @@ Fetches all currently stored sample types items
 
 + Response 200 (application/json)
     + Attributes
-        + SampleTypes: (array[SampleTypesDTO], required)
+        + SampleTypes: array[SampleTypeDto] (array[SampleTypeDto], required) - Array of SampleTypeDto 
     
 + Response 404 (application/json)
 
@@ -32,13 +34,13 @@ Fetches all currently stored sample events, statuses and flags. Grouped in one r
 
 + Response 200 (application/json)
     + Attributes (object)
-        + SampleEvents: array[SampleEventDTO] (array[SampleEventDTO], required)
-        + SampleStatus: array[SampleStatusDTO] ( required)
-        + SampleFlag: array[SampleFlagDTO] ( required)
+        + SampleEvents: array[SampleEventDto] (array[SampleEventDto], required) - Array of SampleEventDto
+        + SampleStatus: array[SampleStatusDto] (array[SampleStatusDto], required) - Array of SampleStatusDto
+        + SampleFlags: array[SampleFlagDto] ( array[SampleFlagDto], required) - Array of SampleFlagDto
     
 + Response 404 (application/json)
 
-        Sample types not found.
+        Sample properties not found.
 
 
 # Group Sample API  
@@ -60,7 +62,7 @@ Returns specified sampleId if it belongs to given project. If no sampleId is spe
 
  
 + Response 200 (application/json)
-    + Attributes (SampleDTO)
+    + Attributes (SampleDto)
     
 + Response 404 (application/json)
         
@@ -80,30 +82,33 @@ if not found. If no subject is given, samples set is created without attachment 
 
 
 # Data Structures
-
-## SampleTypesDTO (object)
+## SampleTypeDto (object)
+Definition of SampleType 
 + Id: 12345678 (number) - Unique key
 + Label: myLabel (string) - Free text for End User
 + LocalizationNameKey: myName (string) - Localized name key for the sample types
 + Localization Description Key: myDescription (string) - Localized description key for the sample types 
 
-## SampleEventDTO (object)
+## SampleEventDto (object)
+Definition of Sample Event
 + Id: 12345678 (number) - Unique key
 + Label: myLabel (string) - Free text for End User
 + LocalizationNameKey: myName (string) - Localized name key for the sample event
 
-## SampleStatusDTO (object)
+## SampleStatusDto (object)
+Definition of Sample Status
 + Id: 12345678 (number) - Unique key
 + Label: myLabel (string) - Free text for End User
 + LocalizationNameKey: myName (string) - Localized name key for the sample status
 
-## SampleFlagDTO (object)
+## SampleFlagDto (object)
+Definition of Sample Flag
 + Id: 12345678 (number) - Unique key
 + Label: myLabel (string) - Free text for End User
 + LocalizationNameKey: myName (string) - Localized name key for the sample flag
 
-
-## SamplePropertiesDTO (object)
+## SamplePropertiesDto (object)
+Definition of Sample Properties
 + ExternalSampleId: 12A4  (string, optional) - External Sample Id, such as parallel barcode from different system
 + ExternalSubjectId: 21az (string,optional) - External Subject Id, such as parallel identifier from different system
 + NumberOfVisits: 1 (number, optional) - Number Of Visits (?)
@@ -114,10 +119,30 @@ if not found. If no subject is given, samples set is created without attachment 
 + SampleTypeId (required, number) - Sample Type identifier
 
 
-## SampleDTO (object)
+## SampleDto (object)
+Definition of sample
 + SampleId: 123456789 (number,  required)  - Sample ID
-+ SampleProperties: SamplePropertiesDTO
++ SampleProperties: SamplePropertiesDto (SamplePropertiesDto, optional) - SamplePropertiesDto
 + ClientSampleId: 1 (number, optional) - Identifier of Sample ID received from client in request
-+ Events (array[SamplePropertiesDTO], required) - Collection of sample events 
++ Events: SampleEventsDto (SampleEventsDto, optional) - Collection of sample events 
+
+## SampleEventsDto (array)
+Decribes sample event , TODO Rename
++ EventId: 5 (number, required) - Event ID
++ Timestamp:  "2050-02-18T21:00:42Z" (datetime, required) - Timestamp
+
+## SampleStatusResponseDto
+
+
+## SaveSampleResponseDto
+In 29.4 api SaveResponseDto 
++ Samples: array[SampleDTO] (array[SampleDto], required) - Array of SampleDto, sample properties required in SampleDto 
++ Subjects: array[
+
+
+## ProjectSubjectIdDto
+Describes Project Subject
++ projectId: 23 (number, required) - Project 
++ prefix: "HUMAN"
 
  
