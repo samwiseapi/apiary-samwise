@@ -125,13 +125,12 @@ Fetches all currently stored sample events, statuses and flags. Grouped in one r
 
 This section describes sample-related operations.    
 
-## Project Sample Retrieval [/{projectId}/samples/{?sampleId}]  
+## Project Sample Retrieval [/{projectId}/samples/{?sampleId}{?detailed}]  
 
 + Parameters
-
     + projectId (int, `1`) ... Project ID
     + sampleId (optional, int, `124357891`) ... Sample ID to return full information
- 
+    + detailed (optional, boolean) ... if defined and true, returns SampleProperties and Events sub-objects. Otherwise returns these fields as empty.
 
 
 ### Get samples [GET]
@@ -140,13 +139,15 @@ Returns specified sampleId if it belongs to given project. If no sampleId is spe
 
  
 + Response 200 (application/json)
-    + Attributes (SampleDto)
+    + Attributes (array[SampleDto])
     
 + Response 404 (application/json)
         
         Sample in request does not exist in current project, or if no SampleId is specified -  project does not have samples.
- 
++ Response 403 (application/json) 
 
+        User does not have right to perform operation.
+        
 ### Create arbitrary set of samples inside given project [POST]
 
 This method facilitates the scenario, when a random set of samples is created, each sample can belong to arbitrary subject or created without subject attached. 
