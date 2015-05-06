@@ -165,9 +165,12 @@ Sample list operations without project connection
 ### Retrieve list of samples [POST]
 
 Retrieve a list of samples without project connection
-+ Payload
 
++ Payload IdList (application/json)
+    + Body { array[string] }
+    
 + Response 200 (application/json)
+
     + Attributes (array[SampleDto])
 
         
