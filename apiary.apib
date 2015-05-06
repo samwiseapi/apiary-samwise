@@ -360,7 +360,9 @@ missing sample IDs are limited to 1000 first problems in case of FILE UPLOAD ONL
         + BarCodeIds: ["1"] (required, array[string]) - BarCodeIds as Imported Excel file as multiPartContent in the HTTP POST
 
 + Response 200 (application/json)
-    + Attributes (array[SampleReceptionResponseDto])
+    + Attributes (object)
+        + BarCodeId: 1 (required, string) - BarCode Id
+        + StatusCode: 1 (required, EnumFileUploadStatus) - Upload status
        
 
 
