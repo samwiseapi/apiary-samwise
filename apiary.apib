@@ -67,8 +67,8 @@ Decribes sample event,
 
 ## SampleSaveResponseDto
 In 29.4 api SaveResponseDto 
-+ Samples: array[SampleDTO] (array[SampleDto], required) - Array of SampleDto, sample properties required in SampleDto 
-+ Subjects: array[
++ Samples: array[SampleDto] (array[SampleDto], required) - Array of SampleDto, sample properties required in SampleDto 
++ Subjects: array[SubjectStatusDto] (array[SubjectStatusDto], required) - Array of SubjectStatusDto
 
 ## SubjectIdDto
 Dto for subject id
@@ -125,11 +125,12 @@ Fetches all currently stored sample events, statuses and flags. Grouped in one r
 
 This section describes sample-related operations.    
 
-## Project Sample Retrieval [/{projectId}/samples/{?sampleId}{?detailed}]  
+## Project Sample Retrieval [/{projectid}/samples/{?sampleid}{?barcodeid}{?detailed}]  
 
 + Parameters
-    + projectId (int, `1`) ... Project ID
-    + sampleId (optional, int, `124357891`) ... Sample ID to return full information
+    + projectid (int, '1') ... Project ID
+    + sampleid (optional, int, `124357891`) ... Sample ID to return full information
+    + barcodeid (optional, string
     + detailed (optional, boolean) ... if defined and true, returns SampleProperties and Events sub-objects. Otherwise returns these fields as empty.
 
 
