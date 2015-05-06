@@ -125,15 +125,14 @@ Fetches all currently stored sample events, statuses and flags. Grouped in one r
 
 This section describes sample-related operations.    
 
-## Project Sample Retrieval [/{projectid}/samples/{?sampleid}{?barcodeid}{?detailed}]  
+## Project Sample Retrieval [/{projectid}/samples/{?id}{?barcodeid}{?detailed}]  
 Fetches sample(s) of particular project
 Can have only sampleid or barcodeid
 + Parameters
     + projectid (required, int, `1`) ... Project ID
-    + sampleid (optional, int, `124357891`) ... Sample ID to return full information
-    + barcodeid (optional, string, `124357891``) ... Sample BarCodeId
-    + detailed (optional, boolean) ... if defined and true, returns SampleProperties and Events sub-objects. Otherwise returns these fields as empty.
-
+    + id (optional, string, `"124357891"`) ... Sample/Barcode ID to return full information
+    + barcodeid (optional, boolean, `true`) ... If true use BarCodeId else SampleId
+    + detailed (optional, boolean, , `true`) ... if defined and true, returns SampleProperties and Events sub-objects. Otherwise returns these fields as empty.
 
 ### Get project samples [GET]
 
