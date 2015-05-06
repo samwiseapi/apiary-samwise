@@ -217,7 +217,13 @@ See http://source.thl.fi/jira01/browse/SAMPLEMGMT-585
 Also incorporate checks from sample receiving, see error codes list for all detectable errors
 
 + Payload IdList (application/json)
-    + Body { array[string] }
+    + Body (object)
+        + SampleId ...Sample Id or Barcode as string
+        + ProjectIds ...project ids, List<int>
+        + WorkingSetId ...int (0 if no working set) — used for checks
+        + SampleTypeIds ...sample type ids List<int>
+        + UseAnd ...if true, project AND sampletype should match, otherwise OR
+        + Containerid ...ID of container to check to place in. Presently not used but will be needed later when we have rules for container's accepted sample types.
     
 + Response 200 (application/json)
 
