@@ -40,6 +40,12 @@ Definition of Sample Flag
 
 <!--  Sample Dtos -->
 
+## SampleUploadResultDto
+Sample upload Result
++ SampleId: 1 (optional, int) - Sample Id, returned if sample  exists
++ BarCodeId: "1" (required, string) - BarCode Id
++ StatusCode: 1 (required, EnumFileUploadStatus) - Upload status
+
 ## SamplePropertiesDto (object)
 Definition of Sample Properties
 + ExternalSampleId: 12A4  (string, optional) - External Sample Id, such as parallel barcode from different system
@@ -116,6 +122,11 @@ If sample exists beforehand, perform checks and see if conditions are met (same 
 •12- Sample is of wrong sample type
 •500 - Internal server Error
 
+
+## EnumFileUploadStatus
+Status codes for file upload 
+1 - ok
+2 - sample not exist
 
 
 # Group Sample Types, Events, Flags, Statuses API
@@ -257,6 +268,27 @@ Also incorporate checks from sample receiving, see error codes list for all dete
         + StatusCode: 1 (required, EnumSamplePlacing) - SamplePlacing enemeration
         + SampleId: 1 (required, number) - Sample id as in database
         + ContainerHierarchyPath: ContainerHierarchyPathDto (required, ContainerHierarchyPathDto)
+
+
+## Sample file operations  [/samples/file]
+Sample file operations 
+
+### Retrieve Sample Ids from uploaded Excel file [POST]
+Retriece BarCode Ids from excel file.
+missing sample IDs are limited to 1000 first problems in case of FILE UPLOAD ONLY, otherwise 100% of what was supplied in query. and statuses
+
+
+
++ Payload IdList (application/json)
+    + Body (object)
+        + BarCodeIds: ["1"] (required, array[string]) - BarCodeIds as Imported Excel file as multiPartContent in the HTTP POST
+
++ Response 200 (application/json)
+    + Attributes (object)
+        + BarCodeId: 1 (required, string) - BarCode Id
+        + StatusCode: 1 (required, EnumFileUploadStatus) - Upload status
+
+
 
 
 
