@@ -85,6 +85,17 @@ In 29.4 api SaveResponseDto
 + Samples: array[SampleDto] (array[SampleDto], required) - Array of SampleDto, sample properties required in SampleDto 
 + Subjects: array[SubjectStatusDto] (array[SubjectStatusDto], required) - Array of SubjectStatusDto
 
+## SampleReceptionDto
+Sample Reception Dto
++ SubjectId: SubjectIdDto (required, subjectIdDto)
++ UseNextFreeSubjectId: true (optional, boolean) - If 'true', pick up SubjectIdSuffix from next free, regardless of SubjectIdSuffix field.
++ SampleData: SampleDto (required, SampleDto)
++ UseNextFreeSampleId: true (optional, boolean) -  If 'true', pick up SampleId from next free, regardless of SubjectIdSuffix field.
++ UseNextFreeAliquote: true (optional, boolean) - If 'true', pick up Aliquote from next free, regardless of Aliquote field.
++ ContainerHierarchyPath: ContainerHierarchyPathDto (optional, boolean) 
+
+
+
 <!--  Subject Dtos --> 
 
 ## SubjectIdDto
@@ -170,7 +181,6 @@ This section describes sample-related operations.
 
 ## Project Sample [/{projectid}/samples/{?id}{?barcodeid}{?detailed}]  
 Fetches sample(s) of particular project
-Can have only sampleid or barcodeid
 + Parameters
     + projectid (required, int, `1`) ... Project ID
     + id (optional, string, `"124357891"`) ... Sample/Barcode ID to return full information
@@ -203,6 +213,57 @@ The entities must belong to one project.
 + Response 200 (application/json)
 
     + Attributes (array[SampleDto])
+    
+## Sample Mass operation [/{projectid}/samples/massoperation/{?id}{?barcodeid}]  
+DRAFT COMMENT THIS PLEASE. HOW TO DO THIS WHEN MANY POST OPERATIONS TO THE SAME RESOURCE
+Sample mass operation of particular project
++ Parameters
+    + projectid (required, int, `1`) ... Project ID
+    + id (optional, string, `"124357891"`) ... Sample/Barcode ID to return full information
+    + barcodeid (optional, boolean, `true`) ... If true use BarCodeId else SampleId
+
+### Create set of samples for many subjects inside given project [POST]
+
+This method facilitates the scenario, when a fixed set of samples is created for number of subjects, so every subject receives same set of samples. Subjects are created 
+if not found. If no subject is given, samples set is created without attachment to any subject. The entities must belong to one project.
+
++ Payload List of Samples (application/json)
+    + Body { Subjects: array[SubjectIdDto],
+             Samples: array[SampleDto]}
+    
++ Response 200 (application/json)
+
+    + Attributes (object)
+        + Samples: array[SampleDto] (array[SampleDto], required) - Array of SampleDto, sample properties required in SampleDto 
+        + Subjects: array[SubjectStatusDto] (array[SubjectStatusDto], required) - Array of SubjectStatusDto
+
+
+## Sample Receive [/{projectid}/samples/receive/{?id}{?barcodeid}]  
+DRAFT COMMENT THIS PLEASE. HOW TO DO THIS WHEN MANY POST OPERATIONS TO THE SAME RESOURCE
+Storing Received samples in database. This includes storing both "natural" and "additional" data about sample. 
+
++ Parameters
+    + projectid (required, int, `1`) ... Project ID
+    + id (optional, string, `"124357891"`) ... Sample/Barcode ID to return full information
+    + barcodeid (optional, boolean, `true`) ... If true use BarCodeId else SampleId
+
+### Receive samples [POST]
+Storing Received samples in database. This includes storing both "natural" and "additional" data about sample.
+
++ Payload List of Samples (application/json)
+    + Body { [SampleReceptionDto])
+ }
+    
++ Response 200 (application/json)
+
+    + Attributes (array[SampleReceptionDto])
+        + Samples: array[SampleDto] (array[SampleDto], required) - Array of SampleDto, sample properties required in SampleDto 
+        + Subjects: array[SubjectStatusDto] (array[SubjectStatusDto], required) - Array of SubjectStatusDto
+ 
+
+ 
+
+
 
 ## Sample list operations   [/samples/list/{?detailed}{barcodeid}] 
 Sample list operations without project connection
@@ -232,7 +293,7 @@ Aliquote operation for sample.
 
 ### Get aliquote status [GET]
 
-Reports if particular aliquote taken or not. WORKS WITH ARRAY OF INPUT SAMPLES
+Reports if particular aliquote taken or not. 
 
 + Response 200 (application/json)
 
@@ -265,7 +326,7 @@ Also incorporate checks from sample receiving, see error codes list for all dete
 + Response 200 (application/json)
 
     + Attributes (object)
-        + StatusCode: 1 (required, EnumSamplePlacing) - SamplePlacing enemeration
+        + SaveStatus: 1 (required, EnumSamplePlacing) - SamplePlacing enemeration
         + SampleId: 1 (required, number) - Sample id as in database
         + ContainerHierarchyPath: ContainerHierarchyPathDto (required, ContainerHierarchyPathDto)
 
@@ -292,11 +353,6 @@ missing sample IDs are limited to 1000 first problems in case of FILE UPLOAD ONL
 
 
 
-
-### Create set of samples for many subjects inside given project [POST]
-
-This method facilitates the scenario, when a fixed set of samples is created for number of subjects, so every subject receives same set of samples. Subjects are created 
-if not found. If no subject is given, samples set is created without attachment to any subject. The entities must belong to one project.
 
 
 
