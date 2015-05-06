@@ -54,6 +54,7 @@ Definition of Sample Properties
 Definition of sample
 + SampleId: 123456789 (number,  required)  - Sample ID
 + BarCodeId: "1234567890" (string,  required)  - BarCode ID
++ SaveStatus: 1 (enum, optional) - Save status used whrn dto used as save response 
 + SampleProperties: SamplePropertiesDto (SamplePropertiesDto, optional) - SamplePropertiesDto
 + ClientSampleId: 1 (number, optional) - Identifier of Sample ID received from client in request
 + Events: array[SampleEventDto] (array[SampleEventDto], optional) - Array of SampleEventDto 
@@ -71,8 +72,7 @@ Decribes sample event,
 
 ## SampleStatusResponseDto
 
-
-## SampleSaveResponseDto
+## SampleMassCreateResponseDto
 In 29.4 api SaveResponseDto 
 + Samples: array[SampleDto] (array[SampleDto], required) - Array of SampleDto, sample properties required in SampleDto 
 + Subjects: array[SubjectStatusDto] (array[SubjectStatusDto], required) - Array of SubjectStatusDto
@@ -89,9 +89,8 @@ Dto for subject status
 
 ## ProjectSubjectIdDto
 Describes Project Subject
-+ projectId: 23 (number, required) - Project ID 
-+ prefix: "HUMAN"
-+ subjectId: 12
++ ProjectId: 23 (number, required) - Project ID 
++ SubjectId: SubjectIdDto
 
 # Group Sample Types, Events, Flags, Statuses API
 
@@ -132,7 +131,7 @@ Fetches all currently stored sample events, statuses and flags. Grouped in one r
 
 This section describes sample-related operations.    
 
-## Project Sample Retrieval [/{projectid}/samples/{?id}{?barcodeid}{?detailed}]  
+## Project Sample [/{projectid}/samples/{?id}{?barcodeid}{?detailed}]  
 Fetches sample(s) of particular project
 Can have only sampleid or barcodeid
 + Parameters
@@ -156,11 +155,24 @@ Returns specified sampleId if it belongs to given project. If no sampleId is spe
 
         User does not have right to perform operation.
 
+### Create arbitrary set of samples inside given project [POST]
+
+This method facilitates the scenario, when a random set of samples is created, each sample can belong to arbitrary subject or created without subject attached. 
+The entities must belong to one project.
+
++ Payload List of Samples (application/json)
+    + Body { array[SampleDto] }
+    
++ Response 200 (application/json)
+
+    + Attributes (array[SampleDto])
+
 ## Sample list operations   [/samples/list/{?detailed}{barcodeid}] 
 Sample list operations without project connection
 + Parameters
     + detailed (optional, boolean) ... if defined and true, returns SampleProperties and Events sub-objects. Otherwise returns these fields as empty.
     + barcodeid (optional, boolean, `true`) ... If true use BarCodeId else SampleId
+
 
 ### Retrieve list of samples [POST]
 
@@ -173,11 +185,55 @@ Retrieve a list of samples without project connection
 
     + Attributes (array[SampleDto])
 
-        
-### Create arbitrary set of samples inside given project [POST]
+## Aliquote status [/samples/{sampleid}/aliquote{?projectid}{subjectid}{aliquote}]
+Aliquote operation for sample.
++ Parameters
+    + sampleid (required, number) ... Sample ID
+    + projectid (required, int, `1`) ... ProjectId
+    + subjectid (required, string, `MySub-1`) ... SubjectId
+    + aliquote (required, string, `MyAli`) ... Aliquote
 
-This method facilitates the scenario, when a random set of samples is created, each sample can belong to arbitrary subject or created without subject attached. 
-The entities must belong to one project.
+### Get aliquote status [GET]
+
+Reports if particular aliquote taken or not. WORKS WITH ARRAY OF INPUT SAMPLES
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+        + ProjectSubject: ProjectSubjectIdDto
+        + SampleId: 1 (required, number) ...
+        + Aliquote: "Ali" (required, string)
+        + SampleFound: true (required, boolean)
+        + SubjectFound: true (required, boolean)
+        + AliquoteFree: true (required, boolean)
+
+
+## Sample place [/samples/{sampleid}/place]
+
+
+### Check can place sample [POST]
+Before a sample can be  placed, we must be sure that it does not violate any pre-condition. If a pre-condition is violated, it is reported. 
+See http://source.thl.fi/jira01/browse/SAMPLEMGMT-585 
+Also incorporate checks from sample receiving, see error codes list for all detectable errors
+
++ Payload IdList (application/json)
+    + Body { array[string] }
+    
++ Response 200 (application/json)
+
+    + Attributes (array[SampleDto])
+
+
+
+
+
+ 
+
+
+
+
+
+https://<base_url>api/samples/sampleId/canplace 
 
 
 ### Create set of samples for many subjects inside given project [POST]
