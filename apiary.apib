@@ -126,15 +126,16 @@ Fetches all currently stored sample events, statuses and flags. Grouped in one r
 This section describes sample-related operations.    
 
 ## Project Sample Retrieval [/{projectid}/samples/{?sampleid}{?barcodeid}{?detailed}]  
-
+Fetches sample(s) of particular project
+Can have only sampleid or barcodeid
 + Parameters
-    + projectid (int, '1') ... Project ID
+    + projectid (required, int, `1`) ... Project ID
     + sampleid (optional, int, `124357891`) ... Sample ID to return full information
-    + barcodeid (optional, string
+    + barcodeid (optional, string, `124357891``) ... Sample BarCodeId
     + detailed (optional, boolean) ... if defined and true, returns SampleProperties and Events sub-objects. Otherwise returns these fields as empty.
 
 
-### Get samples [GET]
+### Get project samples [GET]
 
 Returns specified sampleId if it belongs to given project. If no sampleId is specified, return all samples of given project.
 
@@ -148,6 +149,13 @@ Returns specified sampleId if it belongs to given project. If no sampleId is spe
 + Response 403 (application/json) 
 
         User does not have right to perform operation.
+
+## Sample list operations   [/samples/list/{?detailed}] 
+Sample list operations without project connection
++ Parameters
+    + detailed (optional, boolean) ... if defined and true, returns SampleProperties and Events sub-objects. Otherwise returns these fields as empty.
+
+### 
         
 ### Create arbitrary set of samples inside given project [POST]
 
