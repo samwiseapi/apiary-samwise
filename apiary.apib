@@ -94,7 +94,11 @@ Sample Reception Dto
 + UseNextFreeAliquote: true (optional, boolean) - If 'true', pick up Aliquote from next free, regardless of Aliquote field.
 + ContainerHierarchyPath: ContainerHierarchyPathDto (optional, boolean) 
 
-
+## SampleReceptionResponseDto
+Sample Reception Response Dto
++ SampleData: SampleDto (required, SampleDto) - Do not return details
++ SubjectId: SubjectIdDto (required, subjectIdDto)
++ ReceiveStatus: EnumSampleReceiveStatus (required, EnumSampleReceiveStatus)
 
 <!--  Subject Dtos --> 
 
@@ -131,6 +135,24 @@ If sample exists beforehand, perform checks and see if conditions are met (same 
 
 •11- Sample Id Not Found for the given projects
 •12- Sample is of wrong sample type
+•500 - Internal server Error
+
+## EnumSampleReceiveStatus
+•1 - Sample Id Taken
+•2 - Out of Subject Ids
+•4 - can not assign aliquoute can it happen?
+
+•5 - Sample is already received and has Received timestamp set.
+•6 - Sample is already placed (has the location)
+•7- Sample ID empty (will not happen in our API but included for completeness).
+•8- Sample status is "lost"
+•9 - SampleID is tried to link to another (internal) subjectId than that it has been linked already before.
+•10 - Working set does not contain sample
+
+•11- Sample Id Not Found for the current project
+•12- Sample type mismatch
+•13- Sample Id Does not Exist ( trying to receive a sample that does not exist)
+•99 - Out of Free Sample Id
 •500 - Internal server Error
 
 
@@ -256,14 +278,7 @@ Storing Received samples in database. This includes storing both "natural" and "
     
 + Response 200 (application/json)
 
-    + Attributes (array[SampleReceptionDto])
-        + Samples: array[SampleDto] (array[SampleDto], required) - Array of SampleDto, sample properties required in SampleDto 
-        + Subjects: array[SubjectStatusDto] (array[SubjectStatusDto], required) - Array of SubjectStatusDto
- 
-
- 
-
-
+    + Attributes (array[SampleReceptionResponseDto])
 
 ## Sample list operations   [/samples/list/{?detailed}{barcodeid}] 
 Sample list operations without project connection
@@ -345,9 +360,8 @@ missing sample IDs are limited to 1000 first problems in case of FILE UPLOAD ONL
         + BarCodeIds: ["1"] (required, array[string]) - BarCodeIds as Imported Excel file as multiPartContent in the HTTP POST
 
 + Response 200 (application/json)
-    + Attributes (object)
-        + BarCodeId: 1 (required, string) - BarCode Id
-        + StatusCode: 1 (required, EnumFileUploadStatus) - Upload status
+    + Attributes (array[SampleReceptionResponseDto])
+       
 
 
 
