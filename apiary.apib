@@ -58,6 +58,12 @@ Definition of sample
 + ClientSampleId: 1 (number, optional) - Identifier of Sample ID received from client in request
 + Events: array[SampleEventDto] (array[SampleEventDto], optional) - Array of SampleEventDto 
 
+## SampleQueryDto (object)
+Definition of sample Query
++ Found: true (boolean,  required)  - True if sample found
++ ProjectId: 1 (number,  optional)  - ProjectId if sample found
++ Data: (SampleDto,  required)  - Sample Information , if sample is not found has SampleId or BarCodeId 
+
 ## SampleEventDto (array)
 Decribes sample event,
 + EventId: 5 (number, required) - Event ID
@@ -150,12 +156,20 @@ Returns specified sampleId if it belongs to given project. If no sampleId is spe
 
         User does not have right to perform operation.
 
-## Sample list operations   [/samples/list/{?detailed}] 
+## Sample list operations   [/samples/list/{?detailed}{barcodeid}] 
 Sample list operations without project connection
 + Parameters
     + detailed (optional, boolean) ... if defined and true, returns SampleProperties and Events sub-objects. Otherwise returns these fields as empty.
+    + barcodeid (optional, boolean, `true`) ... If true use BarCodeId else SampleId
 
-### 
+### Retrieve list of samples [POST]
+
+Retrieve a list of samples without project connection
++ Payload
+
++ Response 200 (application/json)
+    + Attributes (array[SampleDto])
+
         
 ### Create arbitrary set of samples inside given project [POST]
 
