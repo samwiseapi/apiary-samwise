@@ -233,7 +233,6 @@ Returns specified sample if it belongs to given project. If no sampleId is speci
      + Attributes (ErrorDto)     
 
 ### Create arbitrary set of samples inside given project [POST]
-
 This method facilitates the scenario, when a random set of samples is created, each sample can belong to arbitrary subject or created without subject attached. 
 The entities must belong to one project.
 
@@ -243,6 +242,18 @@ The entities must belong to one project.
 + Response 200 (application/json)
 
     + Attributes (array[SampleDto])
+
++ Response 404 (application/json)
+   
+    + Attributes (ErrorDto)
+    
++ Response 403 (application/json) 
+
+     + Attributes (ErrorDto)
+     
++ Response 500 (application/json) 
+
+     + Attributes (ErrorDto)     
     
 ## Sample Mass operation [/{projectid}/samples/massoperation/{?id}{?barcodeid}]  
 DRAFT COMMENT THIS PLEASE. HOW TO DO THIS WHEN MANY POST OPERATIONS TO THE SAME RESOURCE
@@ -267,6 +278,17 @@ if not found. If no subject is given, samples set is created without attachment 
         + Samples: array[SampleDto] (array[SampleDto], required) - Array of SampleDto, sample properties required in SampleDto 
         + Subjects: array[SubjectStatusDto] (array[SubjectStatusDto], required) - Array of SubjectStatusDto
 
++ Response 404 (application/json)
+   
+    + Attributes (ErrorDto)
+    
++ Response 403 (application/json) 
+
+     + Attributes (ErrorDto)
+     
++ Response 500 (application/json) 
+
+     + Attributes (ErrorDto)   
 
 ## Sample Receive [/{projectid}/samples/receive/{?id}{?barcodeid}]  
 DRAFT COMMENT THIS PLEASE. HOW TO DO THIS WHEN MANY POST OPERATIONS TO THE SAME RESOURCE
@@ -288,12 +310,23 @@ Storing Received samples in database. This includes storing both "natural" and "
 
     + Attributes (array[SampleReceptionResponseDto])
 
++ Response 404 (application/json)
+   
+    + Attributes (ErrorDto)
+    
++ Response 403 (application/json) 
+
+     + Attributes (ErrorDto)
+     
++ Response 500 (application/json) 
+
+     + Attributes (ErrorDto)   
+
 ## Sample list operations   [/samples/list/{?detailed}{barcodeid}] 
 Sample list operations without project connection
 + Parameters
     + detailed (optional, boolean) ... if defined and true, returns SampleProperties and Events sub-objects. Otherwise returns these fields as empty.
     + barcodeid (optional, boolean, `true`) ... If true use BarCodeId else SampleId
-
 
 ### Retrieve list of samples [POST]
 
@@ -305,6 +338,18 @@ Retrieve a list of samples without project connection
 + Response 200 (application/json)
 
     + Attributes (array[SampleDto])
+    
+ + Response 404 (application/json)
+   
+    + Attributes (ErrorDto)
+    
++ Response 403 (application/json) 
+
+     + Attributes (ErrorDto)
+     
++ Response 500 (application/json) 
+
+     + Attributes (ErrorDto)      
 
 ## Next free aliquote [/samples/{sampleid}/nextfreealiquote{?projectid}{subjectidsuffix}{subjectidprefix}]  
 Resource for next free aliquote.
