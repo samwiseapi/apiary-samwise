@@ -298,6 +298,9 @@ Retrieve a list of samples without project connection
 
     + Attributes (array[SampleDto])
 
+
+
+
 ## Aliquote status [/samples/{sampleid}/aliquote{?projectid}{subjectid}{aliquote}]
 Aliquote operation for sample.
 + Parameters
@@ -322,7 +325,6 @@ Reports if particular aliquote taken or not.
 
 
 ## Sample place [/samples/{sampleid}/place]
-
 
 ### Check can place sample [POST]
 Before a sample can be  placed, we must be sure that it does not violate any pre-condition. If a pre-condition is violated, it is reported. 
@@ -365,8 +367,40 @@ missing sample IDs are limited to 1000 first problems in case of FILE UPLOAD ONL
         + StatusCode: 1 (required, EnumFileUploadStatus) - Upload status
        
 
+## Next free aliquote [/samples/{sampleid}/nextfreealiquote{?projectid}{subjectidsuffix}{subjectidprefix}]  
+Resource for next free aliquote.
+Input data for various samples to check aliquote
+
++ Parameters
+    + projectid (required, int) ... Project id
+    + subjectidprefix (required, string) ...Prefix of SubjectId
+    + subjectidsuffix (required, int) ...suffix of subjid
+ 
+### Get next free aliquote [GET]
+Returns next free aliquote value.
+WHAT IS USED FOR MAKING NEW ALIQUOTE? IF SOME PARAMETERS ARE NOT NEEDED, REMOVE THEM FROM WebAPI.
+
++ Response 200 (application/json)
+Return object that mirrors all the input and adds next free aliquote.
+    + Attributes (object)
+        + ProjectId: 1
+        + SubjectIdPrefix: 'aa'
+        + SubjectIdSuffix: 1
+        + SampleId: 1321431
+        + Aliquote : 'A1' 
 
 
++ Response 412  (application/json)
+Length required if some parameters are missing from request
+    + Attributes (object)
+    
++ Response 404  (application/json)
+if any of the project/subject/sample can not be found
+     + Attributes (object)
+    
++ Response 500  (application/json)
+internal server error in all other cases
+     + Attributes (object)
 
 
 
