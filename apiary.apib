@@ -395,19 +395,17 @@ Aliquote operation for sample.
     + aliquote (required, string, `MyAli`) ... Aliquote
 
 ### Get aliquote status [GET]
-
-Reports if particular aliquote taken or not. 
+Reports if particular aliquote is taken or not. 
 
 + Response 200 (application/json)
 
     + Attributes (object)
-        + ProjectSubject: ProjectSubjectIdDto
+        + ProjectSubject: ProjectSubjectIdDto (required, ProjectSubjectIdDto)
         + SampleId: 1 (required, number) ...
         + Aliquote: "Ali" (required, string)
         + SampleFound: true (required, boolean)
         + SubjectFound: true (required, boolean)
         + AliquoteFree: true (required, boolean)
-
 
 ## Sample place [/samples/{sampleid}/place]
 
