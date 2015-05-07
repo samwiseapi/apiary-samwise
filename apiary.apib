@@ -407,6 +407,15 @@ Reports if particular aliquote is taken or not.
         + SubjectFound: true (required, boolean)
         + AliquoteFree: true (required, boolean)
 
+
++ Response 401 (application/json)
+Length required if sampleid or subjectidsuffix or aliquote is empty
+    + Attributes (ErrorDto)
+
++ Response 500  (application/json)
+internal server error in all other cases
+     + Attributes (ErrorDto)
+
 ## Sample place [/samples/{sampleid}/place]
 
 ### Check can place sample [POST]
