@@ -447,8 +447,6 @@ Sample file operations
 Retriece BarCode Ids from excel file.
 missing sample IDs are limited to 1000 first problems in case of FILE UPLOAD ONLY, otherwise 100% of what was supplied in query. and statuses
 
-
-
 + Payload IdList (application/json)
     + Body (object)
         + BarCodeIds: ["1"] (required, array[string]) - BarCodeIds as Imported Excel file as multiPartContent in the HTTP POST
@@ -457,8 +455,24 @@ missing sample IDs are limited to 1000 first problems in case of FILE UPLOAD ONL
     + Attributes (object)
         + BarCodeId: 1 (required, string) - BarCode Id
         + StatusCode: 1 (required, EnumFileUploadStatus) - Upload status
-       
 
+   
++ Response 500 (application/json)
+Internal Server Error
+    + Attributes (ErrorDto)
+    
++ Response 401 (application/json)
+Length required if no samples are in the file at all
+    + Attributes (ErrorDto)
+
++ Response 412 (application/json)
+Precondition failed if header does not match the format
+    + Attributes (ErrorDto)
+
+
++ Response 415 (application/json)
+Unsupported media type
+    + Attributes (ErrorDto)
 
 
 
