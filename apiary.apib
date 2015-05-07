@@ -339,7 +339,7 @@ Retrieve a list of samples without project connection
 
     + Attributes (array[SampleDto])
     
- + Response 404 (application/json)
++ Response 404 (application/json)
    
     + Attributes (ErrorDto)
     
@@ -359,7 +359,7 @@ Input data for various samples to check aliquote
     + projectid (required, int) ... Project id
     + subjectidprefix (required, string) ...Prefix of SubjectId
     + subjectidsuffix (required, int) ...suffix of subjid
- 
+
 ### Get next free aliquote [GET]
 Returns next free aliquote value.
 WHAT IS USED FOR MAKING NEW ALIQUOTE? IF SOME PARAMETERS ARE NOT NEEDED, REMOVE THEM FROM WebAPI.
@@ -376,16 +376,15 @@ Return object that mirrors all the input and adds next free aliquote.
 
 + Response 412  (application/json)
 Length required if some parameters are missing from request
-    + Attributes (object)
+    + Attributes (ErrorDto)
     
 + Response 404  (application/json)
 if any of the project/subject/sample can not be found
-     + Attributes (object)
+    + Attributes (ErrorDto)
     
 + Response 500  (application/json)
 internal server error in all other cases
-     + Attributes (object)
-
+     + Attributes (ErrorDto)
 
 ## Aliquote status [/samples/{sampleid}/aliquote{?projectid}{subjectid}{aliquote}]
 Aliquote operation for sample.
