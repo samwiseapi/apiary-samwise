@@ -15,38 +15,33 @@ Sample related Dtos start with Sample, example SampleSomeDto
 
 ## ErrorDto (object)
 Definition of standard error
-+ code: 403 (required, int)
-
-    HTTP error code
-
-+ message: "User friendly description" (optional, string) 
-
-    User friendly description
++ code: 403 (required, int) - HTTP error code
++ message: "User friendly description" (optional, string) - User friendly description
 
 ## SampleTypeDefinitionDto (object)
 Definition of SampleType , since this is definition of SampleType use name SampleTypeDefinitionDto 
 + Id: 12345678 (number) - Unique key
-+ Label: myLabel (string) - Free text for End User
-+ LocalizationNameKey: myName (string) - Localized name key for the sample types
-+ Localization Description Key: myDescription (string) - Localized description key for the sample types 
++ Label: "myLabel" (string) - Free text for End User
++ LocalizationNameKey: "myName" (string) - Localized name key for the sample types
++ Localization Description Key: "myDescription" (string) - Localized description key for the sample types 
 
 ## SampleEventDefinitionDto (object)
 Definition of Sample Event
 + Id: 12345678 (number) - Unique key
-+ Label: myLabel (string) - Free text for End User
-+ LocalizationNameKey: myName (string) - Localized name key for the sample event
++ Label: "myLabel" (string) - Free text for End User
++ LocalizationNameKey: "myName" (string) - Localized name key for the sample event
 
 ## SampleStatusDefinitionDto (object)
 Definition of Sample Status
 + Id: 12345678 (number) - Unique key
-+ Label: myLabel (string) - Free text for End User
-+ LocalizationNameKey: myName (string) - Localized name key for the sample status
++ Label: "myLabel" (string) - Free text for End User
++ LocalizationNameKey: "myName" (string) - Localized name key for the sample status
 
 ## SampleFlagDefinitionDto (object)
 Definition of Sample Flag
 + Id: 12345678 (number) - Unique key
-+ Label: myLabel (string) - Free text for End User
-+ LocalizationNameKey: myName (string) - Localized name key for the sample flag
++ Label: "myLabel" (string) - Free text for End User
++ LocalizationNameKey: "myName" (string) - Localized name key for the sample flag
 
 <!--  Sample Dtos -->
 
@@ -58,37 +53,35 @@ Sample upload Result
 
 ## SamplePropertiesDto (object)
 Definition of Sample Properties
-+ ExternalSampleId: 12A4  (string, optional) - External Sample Id, such as parallel barcode from different system
-+ ExternalSubjectId: 21az (string,optional) - External Subject Id, such as parallel identifier from different system
-+ NumberOfVisits: 1 (number, optional) - Number Of Visits (?)
-+ TimePointUnitId: 1 (number) -  Identifier of unit used in Time Point  
-+ SampleAmountUnitId: 1 (number) - Sample Amount Unit Id, int (This relates to a table that contains all the sample units (volume,mass,concentration...))
++ ExternalSampleId: "12A4"  (string, optional) - External Sample Id, such as parallel barcode from different system
++ ExternalSubjectId: "21az" (string,optional) - External Subject Id, such as parallel identifier from different system
++ NumberOfVisits: 1 (int, optional) - Number Of Visits (?)
++ TimePointUnitId: 1 (int, optional) -  Identifier of unit used in Time Point  
++ SampleAmountUnitId: 1 (int) - Sample Amount Unit Id, int (This relates to a table that contains all the sample units (volume,mass,concentration...))
 + SampleAmount: 0.001 (number) - Sample amount
-+ Aliquote: 'A123' (optional, string) - aliquote string
-+ SampleTypeId (required, number) - Sample Type identifier
++ Aliquote: "A123" (optional, string) - aliquote string
++ SampleTypeId: 1 (required, int) - Sample Type identifier
 
 
 ## SampleDto (object)
 Definition of sample
 + SampleId: 123456789 (number,  required)  - Sample ID
 + BarCodeId: "1234567890" (string,  required)  - BarCode ID
-+ SaveStatus: 1 (enum, optional) - Save status used whrn dto used as save response 
++ SaveStatus: 1 (enum, optional) - Save status used where dto used as save response 
 + SampleProperties: SamplePropertiesDto (SamplePropertiesDto, optional) - SamplePropertiesDto
-+ ClientSampleId: 1 (number, optional) - Identifier of Sample ID received from client in request
++ ClientSampleId: 1 (int, optional) - Identifier of Sample ID received from client in request
 + Events: array[SampleEventDto] (array[SampleEventDto], optional) - Array of SampleEventDto 
 
 ## SampleQueryDto (object)
 Definition of sample Query
 + Found: true (boolean,  required)  - True if sample found
-+ ProjectId: 1 (number,  optional)  - ProjectId if sample found
++ ProjectId: 1 (int,  optional)  - ProjectId if sample found
 + Data: (SampleDto,  required)  - Sample Information , if sample is not found has SampleId or BarCodeId 
 
 ## SampleEventDto (array)
 Decribes sample event,
-+ EventId: 5 (number, required) - Event ID
++ EventId: 5 (int, required) - Event ID
 + Timestamp:  "2050-02-18T21:00:42Z" (datetime, required) - Timestamp
-
-## SampleStatusResponseDto
 
 ## SampleMassCreateResponseDto
 In 29.4 api SaveResponseDto 
@@ -124,7 +117,7 @@ Dto for subject status
 
 ## ProjectSubjectIdDto
 Describes Project Subject
-+ ProjectId: 23 (number, required) - Project ID 
++ ProjectId: 23 (int, required) - Project ID 
 + SubjectId: SubjectIdDto
 
 <!--  Container Dtos -->
@@ -170,11 +163,10 @@ If sample exists beforehand, perform checks and see if conditions are met (same 
 ## EnumFileUploadStatus
 Status codes for file upload 
 1 - ok
-2 - sample not exist
+2 - not exist
 
 
 # Group Sample Types, Events, Flags, Statuses API
-
 This section describes operations to retrieve sample types, events, statuses and flags. These operations provide client with information about sample related enumerations.
 
 ## Sample Types [/sampletypes]
@@ -266,7 +258,7 @@ Sample mass operation of particular project
 
 ### Create set of samples for many subjects inside given project [POST]
 
-This method facilitates the scenario, when a fixed set of samples is created for number of subjects, so every subject receives same set of samples. Subjects are created 
+This method facilitates the scenario, when a fixed set of samples is created for number of subjects, so every subject receives the same set of samples. Subjects are created 
 if not found. If no subject is given, samples set is created without attachment to any subject. The entities must belong to one project.
 
 + Payload List of Samples (application/json)
