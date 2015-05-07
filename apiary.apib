@@ -15,8 +15,13 @@ Sample related Dtos start with Sample, example SampleSomeDto
 
 ## ErrorDto (object)
 Definition of standard error
-+ code: 403 (required, int) - HTTP error code
-+ message: "User friendly description" (optional, string) - User friendly description
++ code: 403 (required, int)
+
+    HTTP error code
+
++ message: "User friendly description" (optional, string) 
+
+    User friendly description
 
 ## SampleTypeDefinitionDto (object)
 Definition of SampleType , since this is definition of SampleType use name SampleTypeDefinitionDto 
@@ -172,19 +177,14 @@ Status codes for file upload
 This section describes operations to retrieve sample types, events, statuses and flags. These operations provide client with information about sample related enumerations.
 
 ## Sample Types [/sampletypes]
++ Attributes (array[SampleTypeDefinitionDto])
 
 ### Get All Sample Types [GET]
-
 Fetches all currently stored sample types items 
 
 + Response 200 (application/json)
-    + Attributes
-        + SampleTypes: array[SampleTypeDefinitionDto] (array[SampleTypeDefinitionDto], required) - Array of SampleTypeDefinitionDto 
-    
-+ Response 404 (application/json)
+    + Attributes (array[SampleTypeDefinitionDto])
 
-        Sample types not found.
- 
 ## Sample Event, Status, Flag List [/sampleproperties]
 
 ### Get Sample Event , Status, Flags List [GET]
@@ -198,8 +198,7 @@ Fetches all currently stored sample events, statuses and flags. Grouped in one r
         + SampleFlags: array[SampleFlagDefinitionDto] ( array[SampleFlagDefinitionDto], required) - Array of SampleFlagDefinitionDto
     
 + Response 404 (application/json)
-
-        Sample properties not found.
+    + Attributes (ErrorDto)
 
 
 # Group Sample API  
